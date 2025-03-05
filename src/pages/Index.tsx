@@ -1,18 +1,18 @@
-import React from 'react';
+
+import React, { useState, useEffect } from 'react';
 import { Header } from '@/components/Header';
 import { Hero } from '@/components/Hero';
 import { CallToActionSection } from '@/components/CallToActionSection';
 import { Footer } from '@/components/Footer';
 import { OptimizedHowItWorks } from '@/components/OptimizedHowItWorks';
 import { BottomNav } from '@/components/BottomNav';
-import { Banner } from '@/components/Banner';
+import { Banner } from '@/components/ui/Banner';
 import { Button } from '@/components/ui/Button';
-import { Stay } from '@/components/Stay';
+import { Star } from 'lucide-react';
 import { GlowDialog } from '@/components/ui/GlowDialog';
 import { AnimatedShinyText } from '@/components/ui/AnimatedShinyText';
 import { Features } from '@/components/Features';
 import { Pricing } from '@/components/Pricing';
-import { Waves } from '@/components/ui/Waves';
 import { PreviewSearch } from '@/components/PreviewSearch';
 import { useIsMobile } from '@/hooks/useIsMobile';
 import { cn } from '@/lib/utils';
@@ -36,57 +36,40 @@ const Index = () => {
   }, []);
   
   const handleTryNowClick = () => {
-    setShowGlowDialog(true);        return (
-            <div className="flex flex-col min-h-screen w-full max-w-full overflow-x-hidden">
-                <Header />
-                {showBanner && <div className="relative">
-                    <Banner
-                        size="lg"
-                        action={<Button variant="secondary" size="sm" className={cn("flex text-sm px-2 py-1")}>
-                            "Get Early Access"
-                        </Button>}
-                        isClosable onClose={() => setShowBanner(false)} className="animate-in fade-in-50"
-                    >
-                        <div className="items-center justify-left gap-3 sm:gap-4 relative z-10">
-                            <Star className="w-5 h-5 sm:h-6 sm:w-6 text-yellow-200 animate-pulse" />
-                            <AnimatedShinyText className={cn("text-sm sm:text-base font-bold inline-block", "text-white relative z-10")}
-                            >
-                                Join the AI-powered revolution in property management!
-                            </AnimatedShinyText>
-                        </div>
-                    </Banner>
-                </div>}
-                <main className="flex-1 flex flex-col items-center justify-center pt-20 pb-10 sm:pt-24 sm:pb-12">
-                    <BackgroundEffects />
-                    <GlowDialog
-                        title="Welcome to ZeroVacancy"
-                        description="Revolutionize your property management experience"
-                        ctaText="Get Started"
-                        ctaLink="/signup"
-                    >
-                        <Hero />
-                    </GlowDialog>
-                    <CallToActionSection
-                        title="Ready to transform your property management?"
-                        description="Join ZeroVacancy today and experience the future of property management."
-                        ctaText="Get Started"
-                        ctaLink="/signup"
-                    />
-                    <Features />
-                    <Pricing />
-                </main>
-                <Footer />
-                <BottomNav />
-            </div>
-        );lassName="flex flex-col min-h-screen w-full max-w-full overflow-x-hidden">
+    setShowGlowDialog(true);
+  };
+  
+  return (
+    <div className="flex flex-col min-h-screen w-full max-w-full overflow-x-hidden">
       <Header />
       {showBanner && <div className="relative">
-          <Banner variant="purple" size="lg" action={<Button variant="secondary" size="sm" className={cn("flex text-xs sm:text-sm items-center whitespace-nowrap", isMobile ? "px-2 py-1.5 min-w-[7rem] min-h-[2rem]" : "px-3 py-2 sm:px-5 sm:py-2.5 min-w-[8rem] sm:min-w-[9rem] min-h-[2.25rem] sm:min-h-[2.5rem]", "bg-amber-400 hover:bg-amber-300 text-gray-900 font-bold", "border-2 border-amber-300", "transition-all duration-200", "touch-manipulation", "shadow-[0_2px_10px_rgba(0,0,0,0.15)]")} onClick={handleTryNowClick}>
-                {isMobile ? "Try Now" : "Get Early Access"}
-              </Button>} layout="complex" isClosable onClose={() => setShowBanner(false)} className="animate-in fade-in slide-in-from-top duration-500 relative overflow-hidden min-h-[3.25rem] sm:min-h-[3.5rem] my-0 py-0">
+          <Banner 
+            variant="purple" 
+            size="lg" 
+            action={<Button 
+              variant="secondary" 
+              size="sm" 
+              className={cn("flex text-xs sm:text-sm items-center whitespace-nowrap", 
+                isMobile ? "px-2 py-1.5 min-w-[7rem] min-h-[2rem]" : "px-3 py-2 sm:px-5 sm:py-2.5 min-w-[8rem] sm:min-w-[9rem] min-h-[2.25rem] sm:min-h-[2.5rem]", 
+                "bg-amber-400 hover:bg-amber-300 text-gray-900 font-bold", 
+                "border-2 border-amber-300", 
+                "transition-all duration-200", 
+                "touch-manipulation", 
+                "shadow-[0_2px_10px_rgba(0,0,0,0.15)]")} 
+              onClick={handleTryNowClick}>
+              {isMobile ? "Try Now" : "Get Early Access"}
+            </Button>} 
+            layout="complex" 
+            isClosable 
+            onClose={() => setShowBanner(false)} 
+            className="animate-in fade-in slide-in-from-top duration-500 relative overflow-hidden min-h-[3.25rem] sm:min-h-[3.5rem] my-0 py-0">
             <div className="flex items-center justify-left gap-3 sm:gap-4 relative z-10">
               <Star className="h-5 w-5 sm:h-6 sm:w-6 text-yellow-300 animate-pulse" />
-              <AnimatedShinyText className={cn("text-sm sm:text-base font-bold inline-block", "text-white relative z-10 rounded", "px-1 tracking-wide")} shimmerWidth={200}>
+              <AnimatedShinyText 
+                className={cn("text-sm sm:text-base font-bold inline-block", 
+                "text-white relative z-10 rounded", 
+                "px-1 tracking-wide")} 
+                shimmerWidth={200}>
                 Join the AI-powered revolution in property management!
               </AnimatedShinyText>
             </div>
@@ -136,7 +119,7 @@ const Index = () => {
             
             {/* Professional Content Creation Services */}
             <section className="w-full">
-              <FeaturesSectionWithHoverEffects />
+              <Features />
             </section>
 
             {/* Pricing Section */}
@@ -160,4 +143,5 @@ const Index = () => {
     </div>
   );
 };
+
 export default Index;

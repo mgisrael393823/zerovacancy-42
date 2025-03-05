@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import Header from '../components/Header';
 import { Hero } from '../components/hero/Hero';
@@ -10,7 +11,7 @@ import { Button } from '@/components/ui/button';
 import { Star } from 'lucide-react';
 import { GlowDialog } from '@/components/ui/glow-dialog';
 import { AnimatedShinyText } from '@/components/ui/animated-shiny-text';
-import { Feature } from '@/components/ui/feature-section-with-bento-grid';
+import { FeaturesSectionWithHoverEffects } from '@/components/features/Features';
 import Pricing from '@/components/Pricing';
 import { Waves } from '@/components/ui/waves';
 import PreviewSearch from '@/components/PreviewSearch';
@@ -98,7 +99,7 @@ const Index = () => {
             
             {/* Professional Content Creation Services */}
             <section className="w-full">
-              <Feature />
+              <FeaturesSectionWithHoverEffects />
             </section>
 
             {/* Pricing Section */}

@@ -1,7 +1,4 @@
 
-// This component is kept for backward compatibility
-// The new implementation uses BentoCard from bento-grid.tsx
-
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";

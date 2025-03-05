@@ -33,24 +33,4 @@
   .search-group {
     @apply flex items-center gap-2 p-3 sm:p-4 bg-secondary rounded-lg transition-all duration-200 focus-within:bg-background focus-within:shadow-sm;
   }
-  
-  /* Bento grid specific styles */
-  .bento-grid {
-    @apply grid w-full grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 auto-rows-fr;
-  }
-  
-  .bento-card {
-    @apply relative group flex flex-col justify-between overflow-hidden rounded-xl bg-white 
-           shadow-sm hover:shadow-md transition-all duration-300
-           dark:bg-black dark:border dark:border-white/10;
-  }
-  
-  .bento-card-content {
-    @apply z-10 flex flex-col gap-1 p-6 transition-all duration-300;
-  }
-  
-  .bento-card-hover-effect {
-    @apply absolute inset-0 transform-gpu transition-all duration-300 
-           group-hover:bg-black/[.03] group-hover:dark:bg-neutral-800/10;
-  }
 }

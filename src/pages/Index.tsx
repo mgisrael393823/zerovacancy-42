@@ -4,7 +4,7 @@ import Header from '@/components/Header';
 import Hero from '@/components/Hero';
 import CallToActionSection from '@/components/CallToActionSection';
 import Footer from '@/components/Footer';
-import { OptimizedHowItWorks } from '@/components/how-it-works/OptimizedHowItWorks';
+import OptimizedHowItWorks from '@/components/how-it-works/OptimizedHowItWorks';
 import { BottomNav } from '@/components/navigation/BottomNav';
 import { Banner } from '@/components/ui/banner';
 import { Button } from '@/components/ui/button';

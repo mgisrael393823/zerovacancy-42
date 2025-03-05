@@ -10,3 +10,41 @@
     --brand-text-light: #6E6E87;
   }
 }
+
+@layer utilities {
+  .text-brand-purple-dark {
+    color: var(--brand-purple-dark);
+  }
+  
+  .text-brand-purple-medium {
+    color: var(--brand-purple-medium);
+  }
+  
+  .text-brand-purple {
+    color: var(--brand-purple);
+  }
+  
+  .text-brand-text-primary {
+    color: var(--brand-text-primary);
+  }
+  
+  .text-brand-text-secondary {
+    color: var(--brand-text-secondary);
+  }
+  
+  .text-brand-text-light {
+    color: var(--brand-text-light);
+  }
+  
+  .bg-brand-purple-dark {
+    background-color: var(--brand-purple-dark);
+  }
+  
+  .bg-brand-purple-medium {
+    background-color: var(--brand-purple-medium);
+  }
+  
+  .bg-brand-purple {
+    background-color: var(--brand-purple);
+  }
+}

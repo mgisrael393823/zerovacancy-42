@@ -2,9 +2,11 @@
 import { useEffect, useRef } from 'react';
 import { cn } from '@/lib/utils';
 
-interface GrainifyProps extends React.HTMLAttributes<HTMLDivElement> {}
+interface GrainifyProps {
+  className?: string;
+}
 
-export const Grainify = ({ className, ...props }: GrainifyProps) => {
+export const Grainify = ({ className }: GrainifyProps) => {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
 
   useEffect(() => {
@@ -30,7 +32,7 @@ export const Grainify = ({ className, ...props }: GrainifyProps) => {
     draw();
   }, []);
 
-  return <canvas ref={canvasRef} width={200} height={200} className={cn("absolute inset-0 -z-[1] opacity-20 pointer-events-none", className)} {...props} />;
+  return <canvas ref={canvasRef} width={200} height={200} className={cn("absolute inset-0 -z-[1] opacity-20 pointer-events-none", className)} />;
 };
 
 export default Grainify;

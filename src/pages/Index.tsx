@@ -1,22 +1,22 @@
 
 import React, { useState, useEffect } from 'react';
-import { Header } from '@/components/Header';
-import { Hero } from '@/components/Hero';
-import { CallToActionSection } from '@/components/CallToActionSection';
-import { Footer } from '@/components/Footer';
-import { OptimizedHowItWorks } from '@/components/OptimizedHowItWorks';
-import { BottomNav } from '@/components/BottomNav';
-import { Banner } from '@/components/ui/Banner';
-import { Button } from '@/components/ui/Button';
+import Header from '@/components/Header';
+import Hero from '@/components/Hero';
+import CallToActionSection from '@/components/CallToActionSection';
+import Footer from '@/components/Footer';
+import { OptimizedHowItWorks } from '@/components/how-it-works/OptimizedHowItWorks';
+import { BottomNav } from '@/components/navigation/BottomNav';
+import { Banner } from '@/components/ui/banner';
+import { Button } from '@/components/ui/button';
 import { Star } from 'lucide-react';
-import { GlowDialog } from '@/components/ui/GlowDialog';
-import { AnimatedShinyText } from '@/components/ui/AnimatedShinyText';
-import { Features } from '@/components/Features';
+import { GlowDialog } from '@/components/ui/glow-dialog';
+import { AnimatedShinyText } from '@/components/ui/animated-shiny-text';
+import Features from '@/components/Features';
 import { Pricing } from '@/components/Pricing';
-import { PreviewSearch } from '@/components/PreviewSearch';
-import { useIsMobile } from '@/hooks/useIsMobile';
+import PreviewSearch from '@/components/PreviewSearch';
+import { useIsMobile } from '@/hooks/use-mobile';
 import { cn } from '@/lib/utils';
-import { BackgroundEffects } from '@/components/BackgroundEffects';
+import { BackgroundEffects } from '@/components/features/BackgroundEffects';
 
 /**
  * Main landing page component with performance optimizations

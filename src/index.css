@@ -1,3 +1,43 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Then your CSS variables */
+:root {
+  --background: 0 0% 100%;
+  --foreground: 222.2 47.4% 11.2%;
+  /* rest of your variables */
+}
+
+/* Dark mode variables */
+.dark {
+  --background: 222.2 47.4% 11.2%;
+  /* rest of your dark mode variables */
+}
+
+/* Now you can use @layer base */
+@layer base {
+  body {
+    background-color: hsl(var(--background));
+    color: hsl(var(--foreground));
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-heading;
+    color: hsl(var(--foreground));
+  }
+}
+
+/* Then continue with your imports */
+/* Brand color definitions */
+@import './styles/brand-colors.css';
+
+/* Base styles and CSS variables */
+@import './styles/base.css';
+
+/* Typography styles */
+@import './styles/typography.css';
+@import './styles/typography-mixins.css';
 
 :root {
   --background: 0 0% 100%;

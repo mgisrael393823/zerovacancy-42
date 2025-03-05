@@ -33,4 +33,12 @@
   .search-group {
     @apply flex items-center gap-2 p-3 sm:p-4 bg-secondary rounded-lg transition-all duration-200 focus-within:bg-background focus-within:shadow-sm;
   }
+  
+  .text-rotate-char {
+    @apply inline-block transform-gpu will-change-transform;
+  }
+  
+  .text-gradient-animate {
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-purple-700 via-blue-700 to-cyan-700 bg-size-200 animate-rotate-gradient;
+  }
 }

@@ -1,3 +1,4 @@
+
 import type { Config } from 'tailwindcss';
 
 const config: Config = {
@@ -47,6 +48,15 @@ const config: Config = {
           DEFAULT: 'hsl(var(--card))',
           foreground: 'hsl(var(--card-foreground))',
         },
+        // Brand specific colors
+        brand: {
+          'purple-dark': '#2D1A66',
+          'purple-medium': '#3B2C80',
+          'purple': '#5829D9',
+          'text-primary': '#45455A',
+          'text-secondary': '#5A5A72',
+          'text-light': '#6E6E87',
+        },
       },
       borderRadius: {
         lg: 'var(--radius)',
@@ -55,15 +65,15 @@ const config: Config = {
         xl: '1.5rem',
       },
       keyframes: {
-        accordion-down: {
+        'accordion-down': {
           from: { height: 0 },
           to: { height: 'var(--radix-accordion-content-height)' },
         },
-        accordion-up: {
+        'accordion-up': {
           from: { height: 'var(--radix-accordion-content-height)' },
           to: { height: 0 },
         },
-        fade-in: {
+        'fade-in': {
           from: { opacity: 0 },
           to: { opacity: 1 },
         },

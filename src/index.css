@@ -1,3 +1,4 @@
+
 :root {
   --background: 0 0% 100%;
   --foreground: 222.2 47.4% 11.2%;
@@ -54,6 +55,10 @@
     color: hsl(var(--foreground));
   }
 }
+
+/* Brand color definitions */
+@import './styles/brand-colors.css';
+
 /* Base styles and CSS variables */
 @import './styles/base.css';
 

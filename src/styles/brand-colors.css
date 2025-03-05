@@ -1,0 +1,12 @@
+
+@layer base {
+  :root {
+    /* Brand color palette */
+    --brand-purple-dark: #2D1A66;
+    --brand-purple-medium: #3B2C80;
+    --brand-purple: #5829D9;
+    --brand-text-primary: #45455A;
+    --brand-text-secondary: #5A5A72;
+    --brand-text-light: #6E6E87;
+  }
+}

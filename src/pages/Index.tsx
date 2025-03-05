@@ -6,9 +6,6 @@ import CallToActionSection from '../components/CallToActionSection';
 import Footer from '../components/Footer';
 import OptimizedHowItWorks from '../components/how-it-works/OptimizedHowItWorks';
 import { BottomNav } from '../components/navigation/BottomNav';
-import { Banner } from '@/components/ui/banner';
-import { Button } from '@/components/ui/button';
-import { Star } from 'lucide-react';
 import { GlowDialog } from '@/components/ui/glow-dialog';
 import { AnimatedShinyText } from '@/components/ui/animated-shiny-text';
 import { FeaturesSectionWithHoverEffects } from '@/components/features/Features';
@@ -23,7 +20,6 @@ import { BackgroundEffects } from '@/components/features/BackgroundEffects';
  * Main landing page component with performance optimizations
  */
 const Index = () => {
-  const [showBanner, setShowBanner] = useState(true);
   const [showGlowDialog, setShowGlowDialog] = useState(false);
   const isMobile = useIsMobile();
 
@@ -43,18 +39,6 @@ const Index = () => {
   return (
     <div className="flex flex-col min-h-screen w-full max-w-full overflow-x-hidden">
       <Header />
-      {showBanner && <div className="relative">
-          <Banner variant="purple" size="lg" action={<Button variant="secondary" size="sm" className={cn("flex text-xs sm:text-sm items-center whitespace-nowrap", isMobile ? "px-2 py-1.5 min-w-[7rem] min-h-[2rem]" : "px-3 py-2 sm:px-5 sm:py-2.5 min-w-[8rem] sm:min-w-[9rem] min-h-[2.25rem] sm:min-h-[2.5rem]", "bg-amber-400 hover:bg-amber-300 text-gray-900 font-bold", "border-2 border-amber-300", "transition-all duration-200", "touch-manipulation", "shadow-[0_2px_10px_rgba(0,0,0,0.15)]")} onClick={handleTryNowClick}>
-                {isMobile ? "Try Now" : "Get Early Access"}
-              </Button>} layout="complex" isClosable onClose={() => setShowBanner(false)} className="animate-in fade-in slide-in-from-top duration-500 relative overflow-hidden min-h-[3.25rem] sm:min-h-[3.5rem] my-0 py-0">
-            <div className="flex items-center justify-left gap-3 sm:gap-4 relative z-10">
-              <Star className="h-5 w-5 sm:h-6 sm:w-6 text-yellow-300 animate-pulse" />
-              <AnimatedShinyText className={cn("text-sm sm:text-base font-bold inline-block", "text-white relative z-10 rounded", "px-1 tracking-wide")} shimmerWidth={200}>
-                Join the AI-powered revolution in property management!
-              </AnimatedShinyText>
-            </div>
-          </Banner>
-        </div>}
 
       <main className="flex-1 pb-16 sm:pb-0 w-full overflow-x-hidden">
         <BackgroundEffects 

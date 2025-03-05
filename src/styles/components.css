@@ -3,7 +3,7 @@
 
 @layer components {
   .hero-button {
-    @apply inline-flex items-center justify-center rounded-full px-6 sm:px-8 py-2.5 sm:py-3 text-sm sm:text-base font-medium transition-all duration-200 hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-offset-2 font-space;
+    @apply inline-flex items-center justify-center rounded-lgx-6 sm:px-8 py-2.5 sm:py-3 text-sm sm:text-base font-medium transition-all duration-200 hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-offset-2 font-space;
   }
 
   .hero-button-primary {

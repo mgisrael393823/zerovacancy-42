@@ -72,12 +72,12 @@ export function Hero() {
                 staggerDuration={0.025}
                 staggerFrom="last"
                 mainClassName={cn(
-                  "text-4xl sm:text-5xl lg:text-6xl",
+                  "text-3xl sm:text-4xl lg:text-5xl", // Reduced from text-4xl/5xl/6xl
                   "font-bold font-jakarta tracking-[-0.02em]",
-                  "bg-brand-purple px-2 sm:px-3 text-white",
-                  "rounded-lg py-0.5 sm:py-1 md:py-2 overflow-hidden"
+                  "bg-brand-purple px-2 sm:px-2.5 text-white",
+                  "rounded-lg py-0.5 sm:py-1 overflow-hidden"
                 )}
-                splitLevelClassName="overflow-hidden pb-0.5 sm:pb-1"
+                splitLevelClassName="overflow-hidden pb-0.5"
                 elementLevelClassName="transform-gpu"
               />
             </div>

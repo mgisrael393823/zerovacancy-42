@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState, useRef } from "react";
 import { useInView } from "framer-motion";
 import { LayoutGroup, motion } from "framer-motion";
@@ -20,18 +21,19 @@ export function Hero() {
       className={cn(
         "flex items-center justify-center flex-col", 
         "px-4 sm:px-6", 
-        "py-[24px] sm:py-[40px]", 
-        "my-[16px] sm:my-[24px]", 
-        "min-h-fit sm:min-h-[50vh]", 
+        "py-[32px] sm:py-[48px]", 
+        "my-[20px] sm:my-[32px]", 
+        "min-h-fit sm:min-h-[56vh]", 
         "relative z-10", 
-        "gap-3 sm:gap-4",
+        "gap-5 sm:gap-7",
         "touch-manipulation",
+        "bg-gradient-to-b from-white to-purple-50/30",
         isInView ? "animate-fade-in" : "opacity-0"
       )} 
     >
       <div 
         className={cn(
-          "flex gap-4 sm:gap-5 flex-col max-w-6xl mx-auto w-full px-[3px]",
+          "flex gap-6 sm:gap-7 flex-col max-w-6xl mx-auto w-full px-[3px]",
           isInView ? "animate-fade-in delay-100" : "opacity-0"
         )}
       >
@@ -39,8 +41,8 @@ export function Hero() {
           <h1 className="tracking-tight leading-[1.1] font-bold font-jakarta text-center">
             <motion.span 
               className={cn(
-                "text-primary inline font-bold", // Changed from font-light to font-bold
-                "text-3xl sm:text-4xl lg:text-5xl", 
+                "text-primary inline font-bold", 
+                "text-4xl sm:text-5xl lg:text-6xl", 
                 "tracking-[-0.02em]", 
                 "text-brand-purple-dark", 
                 "block sm:inline-block mb-1 sm:mb-0 font-jakarta"
@@ -71,10 +73,10 @@ export function Hero() {
                 staggerDuration={0.025}
                 staggerFrom="last"
                 mainClassName={cn(
-                  "text-3xl sm:text-4xl lg:text-5xl", // Reduced from text-4xl/5xl/6xl
+                  "text-3xl sm:text-4xl lg:text-5xl", 
                   "font-bold font-jakarta tracking-[-0.02em]",
-                  "bg-brand-purple px-2 sm:px-2.5 text-white",
-                  "rounded-lg py-0.5 sm:py-1 overflow-hidden"
+                  "bg-gradient-to-r from-purple-600 to-indigo-600 px-2.5 sm:px-3 text-white",
+                  "rounded-lg py-0.5 sm:py-1 overflow-hidden shadow-md"
                 )}
                 splitLevelClassName="overflow-hidden pb-0.5"
                 elementLevelClassName="transform-gpu"
@@ -85,33 +87,38 @@ export function Hero() {
 
         <div 
           className={cn(
-            "text-sm sm:text-base lg:text-lg", 
+            "text-base sm:text-lg lg:text-xl", 
             "leading-[1.5]", 
             "tracking-wide", 
-            "text-brand-text-primary", 
+            "text-brand-purple-medium", 
             "text-center", 
-            "max-w-[550px]", 
+            "max-w-[520px]", 
             "mx-auto", 
             "px-2 sm:px-4", 
             "[word-spacing:0.12em] sm:[word-spacing:0.16em]", 
             "relative z-10", 
-            "mt-1 mb-0",
+            "mt-2 mb-1",
             "font-inter"
           )}
         >
-          Connect with expert content creators for your next project. Our AI-powered platform matches you with the perfect professional for your needs and budget.
+          Connect with expert creators to showcase your properties at their best.
         </div>
       </div>
       
       <div 
         className={cn(
           "w-full", 
-          "mt-5 sm:mt-6", 
+          "mt-6 sm:mt-8", 
           "px-3 sm:px-4",
+          "relative",
           isInView ? "animate-fade-in delay-200" : "opacity-0" 
         )}
       >
-        <WaitlistCTA className="mb-4" />
+        {/* Decorative elements */}
+        <div className="absolute -top-12 -left-12 w-24 h-24 bg-purple-100/50 rounded-full blur-xl z-0"></div>
+        <div className="absolute -bottom-16 -right-16 w-32 h-32 bg-indigo-100/50 rounded-full blur-xl z-0"></div>
+        
+        <WaitlistCTA className="mb-4 relative z-10" />
       </div>
     </section>
   );

@@ -1,6 +1,7 @@
 
 import React, { useEffect, useState, useRef } from "react";
 import { useInView } from "framer-motion";
+import { LayoutGroup, motion } from "framer-motion";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { cn } from "@/lib/utils";
 import { WaitlistCTA } from "../ui/waitlist-cta";
@@ -35,48 +36,53 @@ export function Hero() {
           isInView ? "animate-fade-in delay-100" : "opacity-0"
         )}
       >
-        <h1 className="tracking-tight leading-[1.1] font-bold font-jakarta text-center">
-          <span 
-            className={cn(
-              "text-primary inline font-light", 
-              "text-3xl sm:text-4xl lg:text-5xl", 
-              "tracking-[-0.02em]", 
-              "text-brand-purple-dark", 
-              "block sm:inline-block mb-1 sm:mb-0 font-jakarta"
-            )}
-          >
-            Property Content that
-          </span>
-          
-          <div 
-            role="text" 
-            aria-label={`Property Content that ${TITLES[0]}`} 
-            className="relative flex w-full justify-center h-[1.4em] sm:h-[1.5em] md:h-[1.4em] lg:h-[1.2em] overflow-hidden mt-1 sm:mt-2"
-          >
-            <TextRotate
-              texts={TITLES}
-              rotationInterval={isMobile ? 2500 : 2000}
-              transition={{
-                type: "spring",
-                stiffness: 260,
-                damping: 20,
-                mass: 1.2
-              }}
-              initial={{ y: 40, opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
-              exit={{ y: -40, opacity: 0 }}
-              splitBy="characters"
-              staggerDuration={0.02}
-              mainClassName={cn(
-                "text-4xl sm:text-5xl lg:text-6xl",
-                "font-bold font-jakarta tracking-[-0.02em]",
-                "bg-clip-text text-transparent",
-                "bg-gradient-to-r from-purple-700 via-blue-700 to-cyan-700"
+        <LayoutGroup>
+          <h1 className="tracking-tight leading-[1.1] font-bold font-jakarta text-center">
+            <motion.span 
+              className={cn(
+                "text-primary inline font-light", 
+                "text-3xl sm:text-4xl lg:text-5xl", 
+                "tracking-[-0.02em]", 
+                "text-brand-purple-dark", 
+                "block sm:inline-block mb-1 sm:mb-0 font-jakarta"
               )}
-              elementLevelClassName="transform-gpu"
-            />
-          </div>
-        </h1>
+              layout
+              transition={{ type: "spring", damping: 30, stiffness: 400 }}
+            >
+              Property Content that{" "}
+            </motion.span>
+            
+            <div 
+              role="text" 
+              aria-label={`Property Content that ${TITLES[0]}`} 
+              className="relative flex w-full justify-center h-[1.4em] sm:h-[1.5em] md:h-[1.4em] lg:h-[1.2em] overflow-hidden mt-1 sm:mt-2"
+            >
+              <TextRotate
+                texts={TITLES}
+                rotationInterval={2000}
+                transition={{
+                  type: "spring",
+                  stiffness: 400,
+                  damping: 30
+                }}
+                initial={{ y: "100%" }}
+                animate={{ y: 0 }}
+                exit={{ y: "-120%" }}
+                splitBy="characters"
+                staggerDuration={0.025}
+                staggerFrom="last"
+                mainClassName={cn(
+                  "text-4xl sm:text-5xl lg:text-6xl",
+                  "font-bold font-jakarta tracking-[-0.02em]",
+                  "bg-brand-purple px-2 sm:px-3 text-white",
+                  "rounded-lg py-0.5 sm:py-1 md:py-2 overflow-hidden"
+                )}
+                splitLevelClassName="overflow-hidden pb-0.5 sm:pb-1"
+                elementLevelClassName="transform-gpu"
+              />
+            </div>
+          </h1>
+        </LayoutGroup>
 
         <div 
           className={cn(

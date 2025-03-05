@@ -1,4 +1,3 @@
-
 "use client"
 
 import {
@@ -55,15 +54,15 @@ const TextRotate = forwardRef<TextRotateRef, TextRotateProps>(
   (
     {
       texts,
-      transition = { type: "spring", damping: 25, stiffness: 300 },
-      initial = { y: "100%", opacity: 0 },
+      transition = { type: "spring", damping: 30, stiffness: 400 },
+      initial = { y: "100%", opacity: 1 },
       animate = { y: 0, opacity: 1 },
-      exit = { y: "-120%", opacity: 0 },
+      exit = { y: "-120%", opacity: 1 },
       animatePresenceMode = "wait",
       animatePresenceInitial = false,
       rotationInterval = 2000,
-      staggerDuration = 0,
-      staggerFrom = "first",
+      staggerDuration = 0.025,
+      staggerFrom = "last",
       loop = true,
       auto = true,
       splitBy = "characters",
@@ -77,13 +76,8 @@ const TextRotate = forwardRef<TextRotateRef, TextRotateProps>(
   ) => {
     const [currentTextIndex, setCurrentTextIndex] = useState(0)
 
-    // handy function to split text into characters with support for unicode and emojis
+    // Simplified function to split text into characters
     const splitIntoCharacters = (text: string): string[] => {
-      if (typeof Intl !== "undefined" && "Segmenter" in Intl) {
-        const segmenter = new Intl.Segmenter("en", { granularity: "grapheme" })
-        return Array.from(segmenter.segment(text), ({ segment }) => segment)
-      }
-      // Fallback for browsers that don't support Intl.Segmenter
       return Array.from(text)
     }
 
@@ -191,7 +185,7 @@ const TextRotate = forwardRef<TextRotateRef, TextRotateProps>(
           <motion.div
             key={currentTextIndex}
             className={cn(
-              "flex flex-wrap",
+              "flex flex-wrap justify-center",
               splitBy === "lines" && "flex-col w-full"
             )}
             layout

@@ -41,4 +41,12 @@
   .text-gradient-animate {
     @apply bg-clip-text text-transparent bg-gradient-to-r from-purple-700 via-blue-700 to-cyan-700 bg-size-200 animate-rotate-gradient;
   }
+  
+  .text-rotate-wrapper {
+    @apply overflow-hidden py-0.5 sm:py-1 md:py-2 justify-center rounded-lg;
+  }
+  
+  .text-rotate-container {
+    @apply flex flex-wrap justify-center overflow-hidden;
+  }
 }

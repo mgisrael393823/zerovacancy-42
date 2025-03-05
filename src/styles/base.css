@@ -1,5 +1,6 @@
 
-/* Base styles and CSS variables */
+@tailwind base;
+
 @layer base {
   :root {
     --background: 0 0% 100%;
@@ -37,7 +38,7 @@
   }
 
   body {
-    @apply bg-background text-foreground antialiased min-h-screen font-normal;
+    @apply bg-background text-foreground antialiased min-h-screen font-inter font-normal;
     overscroll-behavior-y: auto;
     max-width: 100vw;
     overflow-x: hidden;

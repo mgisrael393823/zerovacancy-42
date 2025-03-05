@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState, useRef } from "react";
 import { useInView } from "framer-motion";
 import { LayoutGroup, motion } from "framer-motion";
@@ -40,7 +39,7 @@ export function Hero() {
           <h1 className="tracking-tight leading-[1.1] font-bold font-jakarta text-center">
             <motion.span 
               className={cn(
-                "text-primary inline font-light", 
+                "text-primary inline font-bold", // Changed from font-light to font-bold
                 "text-3xl sm:text-4xl lg:text-5xl", 
                 "tracking-[-0.02em]", 
                 "text-brand-purple-dark", 

@@ -140,4 +140,3 @@ export const GradientBlobBackground: React.FC<GradientBlobBackgroundProps> = ({
     </div>
   );
 };
-

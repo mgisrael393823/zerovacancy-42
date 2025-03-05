@@ -2,7 +2,7 @@
 import type { Config } from 'tailwindcss';
 
 const config: Config = {
-  darkMode: ['class'],
+  darkMode: ["class"],
   content: [
     './pages/**/*.{ts,tsx}',
     './components/**/*.{ts,tsx}',
@@ -12,9 +12,9 @@ const config: Config = {
   theme: {
     container: {
       center: true,
-      padding: '2rem',
+      padding: "2rem",
       screens: {
-        '2xl': '1400px',
+        "2xl": "1400px",
       },
     },
     extend: {
@@ -22,6 +22,8 @@ const config: Config = {
         inter: ['Inter', 'sans-serif'],
         jakarta: ['Plus Jakarta Sans', 'sans-serif'],
         space: ['Space Grotesk', 'sans-serif'],
+        sans: ["var(--font-sans)", "system-ui", "sans-serif"],
+        heading: ["var(--font-heading)", "Plus Jakarta Sans", "system-ui", "sans-serif"],
       },
       colors: {
         border: 'hsl(var(--border))',
@@ -68,6 +70,7 @@ const config: Config = {
         md: 'calc(var(--radius) - 2px)',
         sm: 'calc(var(--radius) - 4px)',
         xl: '1.5rem',
+        '3xl': '1.5rem',
       },
       keyframes: {
         'accordion-down': {
@@ -82,11 +85,20 @@ const config: Config = {
           from: { opacity: 0 },
           to: { opacity: 1 },
         },
+        'shimmer-slide': {
+          "0%": {
+            transform: "translateX(-100%)",
+          },
+          "100%": {
+            transform: "translateX(100%)",
+          },
+        }
       },
       animation: {
         'accordion-down': 'accordion-down 0.2s ease-out',
         'accordion-up': 'accordion-up 0.2s ease-out',
         'fade-in': 'fade-in 0.5s ease-out forwards',
+        'shimmer-slide': 'shimmer-slide var(--speed, 1.5s) infinite linear',
       },
     },
   },

@@ -62,6 +62,7 @@ export const LocationSuggestions: React.FC<LocationSuggestionsProps> = ({
     zipCodes: suggestions.zipCodes.map(z => z.zip)
   });
 
+  // If loading, show skeleton loaders
   if (isLoading) {
     return (
       <div
@@ -89,7 +90,7 @@ export const LocationSuggestions: React.FC<LocationSuggestionsProps> = ({
       style={{ maxHeight: '300px', overflowY: 'auto' }}
       role="listbox"
       id="location-suggestions"
-      data-state={hasResults || isLoading ? "open" : "closed"}
+      data-state={hasResults ? "open" : "closed"}
     >
       {hasResults ? (
         <div className="py-1">

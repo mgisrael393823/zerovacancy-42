@@ -62,33 +62,45 @@ export const filterLocations = (searchTerm: string): GroupedSuggestions => {
   const term = searchTerm.toLowerCase().trim();
   console.log(`Filtering locations for: "${term}"`);
   
-  // Filter cities with improved matching for partial terms
+  // Filter cities with improved fuzzy matching
   const filteredCities = US_CITIES.filter(loc => {
-    const cityMatch = loc.city?.toLowerCase().includes(term);
-    const stateMatch = loc.state?.toLowerCase().includes(term);
-    // Also match state full names like "New" matching "New York"
-    const partialMatch = term.length >= 2 && 
-      (loc.city?.toLowerCase().split(' ').some(word => word.startsWith(term)) ||
-       loc.state?.toLowerCase().startsWith(term));
+    if (!loc.city || !loc.state) return false;
     
-    return cityMatch || stateMatch || partialMatch;
+    const cityLower = loc.city.toLowerCase();
+    const stateLower = loc.state.toLowerCase();
+    
+    // Complete matching
+    const cityMatch = cityLower.includes(term);
+    const stateMatch = stateLower.includes(term);
+    
+    // Partial word matching (for city)
+    const cityWords = cityLower.split(' ');
+    const partialCityMatch = cityWords.some(word => word.startsWith(term));
+    
+    // State matching - more permissive for short terms
+    const stateStartsMatch = term.length >= 1 && stateLower.startsWith(term);
+    
+    return cityMatch || stateMatch || partialCityMatch || stateStartsMatch;
   }).slice(0, 5); // Limit to 5 results
   
   // Filter zip codes with enhanced matching
   const filteredZips = ZIP_CODES.filter(loc => {
-    // Match zip codes that start with the term
-    const zipMatch = loc.zip?.startsWith(term);
+    if (!loc.zip) return false;
+    
+    // Zip match - prioritize start matching
+    const zipMatch = loc.zip.startsWith(term);
+    
     // For longer search terms, also check city/state matches
-    const locationMatch = term.length >= 3 && 
-      (loc.city?.toLowerCase().includes(term) || 
-       loc.state?.toLowerCase().includes(term));
+    const locationMatch = term.length >= 2 && 
+      ((loc.city && loc.city.toLowerCase().includes(term)) || 
+       (loc.state && loc.state.toLowerCase().includes(term)));
     
     return zipMatch || locationMatch;
   }).slice(0, 3); // Limit to 3 results
   
   console.log(`Found ${filteredCities.length} cities and ${filteredZips.length} zip codes`);
   
-  // Log each found item for debugging
+  // Log matches for debugging
   if (filteredCities.length > 0) {
     console.log("Matching cities:", filteredCities.map(c => `${c.city}, ${c.state}`));
   }

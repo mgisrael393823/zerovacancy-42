@@ -58,18 +58,21 @@ export const filterLocations = (searchTerm: string): GroupedSuggestions => {
     return { cities: [], zipCodes: [] };
   }
 
-  const term = searchTerm.toLowerCase();
+  const term = searchTerm.toLowerCase().trim();
+  console.log(`Filtering locations for: "${term}"`);
   
   // Filter cities
   const filteredCities = US_CITIES.filter(loc => 
-    loc.city?.toLowerCase().includes(term) || 
-    loc.state?.toLowerCase().includes(term)
+    (loc.city?.toLowerCase().includes(term) || 
+    loc.state?.toLowerCase().includes(term))
   ).slice(0, 5); // Limit to 5 results
   
   // Filter zip codes - only if the term looks like a numeric value
   const filteredZips = /^\d+$/.test(term) 
     ? ZIP_CODES.filter(loc => loc.zip?.includes(term)).slice(0, 3)
     : [];
+  
+  console.log(`Found ${filteredCities.length} cities and ${filteredZips.length} zip codes`);
   
   return {
     cities: filteredCities,

@@ -72,6 +72,7 @@ export const LocationSuggestions: React.FC<LocationSuggestionsProps> = ({
         "animate-in fade-in-0 zoom-in-95"
       )}
       role="listbox"
+      id="location-suggestions"
     >
       {hasResults ? (
         <div className="py-1">
@@ -147,4 +148,3 @@ export const LocationSuggestions: React.FC<LocationSuggestionsProps> = ({
     </div>
   );
 };
-

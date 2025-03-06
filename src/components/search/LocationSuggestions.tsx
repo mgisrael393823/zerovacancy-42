@@ -54,13 +54,20 @@ export const LocationSuggestions: React.FC<LocationSuggestionsProps> = ({
   const totalSuggestions = [...suggestions.cities, ...suggestions.zipCodes];
   const hasResults = totalSuggestions.length > 0;
 
-  console.log("Rendering suggestions:", { isLoading, hasResults, suggestionsCount: totalSuggestions.length });
+  console.log("Rendering LocationSuggestions:", { 
+    isLoading, 
+    hasResults, 
+    suggestionsCount: totalSuggestions.length,
+    cities: suggestions.cities.map(c => `${c.city}, ${c.state}`),
+    zipCodes: suggestions.zipCodes.map(z => z.zip)
+  });
 
   if (isLoading) {
     return (
       <div
         ref={suggestionsRef}
         className="absolute left-0 right-0 top-full mt-1 bg-white border border-gray-200 rounded-lg shadow-lg z-[100] py-2"
+        style={{ maxHeight: '300px', overflowY: 'auto' }}
       >
         {[1, 2, 3].map((i) => (
           <div key={i} className="px-4 py-2 animate-pulse">
@@ -79,9 +86,10 @@ export const LocationSuggestions: React.FC<LocationSuggestionsProps> = ({
         "transition-all duration-200 ease-in-out",
         "animate-in fade-in-0 zoom-in-95"
       )}
+      style={{ maxHeight: '300px', overflowY: 'auto' }}
       role="listbox"
       id="location-suggestions"
-      data-state={hasResults ? "open" : "closed"}
+      data-state={hasResults || isLoading ? "open" : "closed"}
     >
       {hasResults ? (
         <div className="py-1">

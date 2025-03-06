@@ -49,7 +49,7 @@ const ZIP_CODES: LocationSuggestion[] = [
 ];
 
 /**
- * Filter locations based on a search term
+ * Filter locations based on a search term with improved matching
  * @param searchTerm The term to search for in cities, states, or zip codes
  * @returns Grouped suggestions for cities and zip codes
  */
@@ -62,19 +62,29 @@ export const filterLocations = (searchTerm: string): GroupedSuggestions => {
   const term = searchTerm.toLowerCase().trim();
   console.log(`Filtering locations for: "${term}"`);
   
-  // Filter cities - now with more permissive matching
-  const filteredCities = US_CITIES.filter(loc => 
-    (loc.city?.toLowerCase().includes(term) || 
-    loc.state?.toLowerCase().includes(term))
-  ).slice(0, 5); // Limit to 5 results
+  // Filter cities with improved matching for partial terms
+  const filteredCities = US_CITIES.filter(loc => {
+    const cityMatch = loc.city?.toLowerCase().includes(term);
+    const stateMatch = loc.state?.toLowerCase().includes(term);
+    // Also match state full names like "New" matching "New York"
+    const partialMatch = term.length >= 2 && 
+      (loc.city?.toLowerCase().split(' ').some(word => word.startsWith(term)) ||
+       loc.state?.toLowerCase().startsWith(term));
+    
+    return cityMatch || stateMatch || partialMatch;
+  }).slice(0, 5); // Limit to 5 results
   
-  // Filter zip codes - now with more permissive matching for numeric values
-  const filteredZips = /\d/.test(term) 
-    ? ZIP_CODES.filter(loc => 
-        loc.zip?.includes(term) || 
-        (term.length >= 3 && loc.city?.toLowerCase().includes(term))
-      ).slice(0, 3)
-    : [];
+  // Filter zip codes with enhanced matching
+  const filteredZips = ZIP_CODES.filter(loc => {
+    // Match zip codes that start with the term
+    const zipMatch = loc.zip?.startsWith(term);
+    // For longer search terms, also check city/state matches
+    const locationMatch = term.length >= 3 && 
+      (loc.city?.toLowerCase().includes(term) || 
+       loc.state?.toLowerCase().includes(term));
+    
+    return zipMatch || locationMatch;
+  }).slice(0, 3); // Limit to 3 results
   
   console.log(`Found ${filteredCities.length} cities and ${filteredZips.length} zip codes`);
   

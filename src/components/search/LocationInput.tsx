@@ -1,10 +1,10 @@
-
 import React, { useState, ChangeEvent, useRef, useEffect } from 'react';
 import { MapPin, X, Loader2 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { LocationSuggestions } from './LocationSuggestions';
-import { filterLocations } from '@/utils/locationData';
+import { filterLocations, GroupedSuggestions } from '@/utils/locationData';
 import { useIsMobile } from '@/hooks/use-mobile';
+import { toast } from '@/hooks/use-toast';
 
 interface LocationInputProps {
   value: string;
@@ -12,11 +12,12 @@ interface LocationInputProps {
 }
 
 export const LocationInput: React.FC<LocationInputProps> = ({ value, onLocationSelect }) => {
-  const [suggestions, setSuggestions] = useState({ cities: [], zipCodes: [] });
+  const [suggestions, setSuggestions] = useState<GroupedSuggestions>({ cities: [], zipCodes: [] });
   const [showSuggestions, setShowSuggestions] = useState(false);
   const [activeIndex, setActiveIndex] = useState(-1);
   const [inputValue, setInputValue] = useState(value);
   const [isLoading, setIsLoading] = useState(false);
+  const [isFocused, setIsFocused] = useState(false);
   const suggestionsRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const searchDebounceRef = useRef<NodeJS.Timeout>();
@@ -31,6 +32,7 @@ export const LocationInput: React.FC<LocationInputProps> = ({ value, onLocationS
     if (value && value.length >= 2) {
       const filtered = filterLocations(value);
       setSuggestions(filtered);
+      console.log("Initial suggestions:", filtered);
     }
   }, []);
 
@@ -60,12 +62,20 @@ export const LocationInput: React.FC<LocationInputProps> = ({ value, onLocationS
         setSuggestions(filtered);
         setShowSuggestions(true);
         console.log("Suggestions updated:", filtered);
+        
+        // Debug information
+        const totalSuggestions = [...filtered.cities, ...filtered.zipCodes];
+        if (totalSuggestions.length > 0) {
+          console.log(`Found ${totalSuggestions.length} suggestions for "${newValue}"`);
+        } else {
+          console.log(`No suggestions found for "${newValue}"`);
+        }
       } else {
         setSuggestions({ cities: [], zipCodes: [] });
         setShowSuggestions(false);
       }
       setIsLoading(false);
-    }, 200); // Reduced debounce time for faster response
+    }, 200); // 200ms debounce time for faster response
   };
 
   const handleSuggestionClick = (suggestion: { city?: string; state?: string; zip?: string }) => {
@@ -80,6 +90,13 @@ export const LocationInput: React.FC<LocationInputProps> = ({ value, onLocationS
     onLocationSelect(newValue);
     setSuggestions({ cities: [], zipCodes: [] });
     setShowSuggestions(false);
+    
+    // Show toast for selection confirmation
+    toast({
+      title: "Location selected",
+      description: `You selected ${newValue}`,
+      duration: 3000,
+    });
   };
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
@@ -113,22 +130,38 @@ export const LocationInput: React.FC<LocationInputProps> = ({ value, onLocationS
     onLocationSelect('');
     setSuggestions({ cities: [], zipCodes: [] });
     setShowSuggestions(false);
+    inputRef.current?.focus();
   };
 
   // Focus handler to show suggestions on click/focus
   const handleFocus = () => {
+    setIsFocused(true);
     if (inputValue.length >= 2) {
       const filtered = filterLocations(inputValue);
       setSuggestions(filtered);
       setShowSuggestions(true);
+      console.log("Focus suggestions:", filtered);
     }
+  };
+  
+  const handleBlur = () => {
+    setIsFocused(false);
+    // Don't hide suggestions immediately on blur
+    // Let the click outside handler manage this
   };
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if (suggestionsRef.current && !suggestionsRef.current.contains(event.target as Node) &&
-          inputRef.current && !inputRef.current.contains(event.target as Node)) {
-        setShowSuggestions(false);
+      if (
+        suggestionsRef.current && 
+        !suggestionsRef.current.contains(event.target as Node) &&
+        inputRef.current && 
+        !inputRef.current.contains(event.target as Node)
+      ) {
+        // Only hide suggestions if clicked outside both the input and suggestions
+        setTimeout(() => {
+          setShowSuggestions(false);
+        }, 150); // Small delay to allow for suggestion click to register
       }
     };
 
@@ -143,6 +176,29 @@ export const LocationInput: React.FC<LocationInputProps> = ({ value, onLocationS
       }
     };
   }, []);
+
+  // Keep suggestions visible when loading
+  useEffect(() => {
+    if (isLoading && inputValue.length >= 2) {
+      setShowSuggestions(true);
+    }
+  }, [isLoading, inputValue]);
+
+  // Debug useEffect to check state
+  useEffect(() => {
+    console.log("Current state:", { 
+      showSuggestions, 
+      isLoading, 
+      isFocused,
+      suggestionsCount: [...suggestions.cities, ...suggestions.zipCodes].length 
+    });
+  }, [showSuggestions, isLoading, isFocused, suggestions]);
+
+  const shouldShowSuggestions = showSuggestions && (
+    isLoading || 
+    [...suggestions.cities, ...suggestions.zipCodes].length > 0 ||
+    isFocused && inputValue.length >= 2
+  );
 
   return (
     <div className="w-full sm:w-[40%] relative group">
@@ -163,6 +219,7 @@ export const LocationInput: React.FC<LocationInputProps> = ({ value, onLocationS
           onChange={handleLocationChange}
           onKeyDown={handleKeyDown}
           onFocus={handleFocus}
+          onBlur={handleBlur}
           className={cn(
             "w-full h-11 sm:h-12 pl-9 sm:pl-11 pr-8 sm:pr-10",
             "bg-white text-sm text-gray-700",
@@ -173,7 +230,7 @@ export const LocationInput: React.FC<LocationInputProps> = ({ value, onLocationS
             "font-medium"
           )}
           aria-label="Location search"
-          aria-expanded={showSuggestions}
+          aria-expanded={shouldShowSuggestions}
           role="combobox"
           aria-controls="location-suggestions"
           aria-activedescendant={activeIndex >= 0 ? `suggestion-${activeIndex}` : undefined}
@@ -193,7 +250,7 @@ export const LocationInput: React.FC<LocationInputProps> = ({ value, onLocationS
         )}
       </div>
 
-      {showSuggestions && (
+      {shouldShowSuggestions && (
         <LocationSuggestions
           suggestions={suggestions}
           searchTerm={inputValue}

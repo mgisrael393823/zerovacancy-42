@@ -12,20 +12,26 @@ interface HighlightedTextProps {
 const HighlightedText: React.FC<HighlightedTextProps> = ({ text, highlight }) => {
   if (!highlight.trim()) return <span>{text}</span>;
 
-  const regex = new RegExp(`(${highlight})`, 'gi');
-  const parts = text.split(regex);
+  try {
+    const regex = new RegExp(`(${highlight})`, 'gi');
+    const parts = text.split(regex);
 
-  return (
-    <span>
-      {parts.map((part, i) => (
-        regex.test(part) ? (
-          <span key={i} className="text-[#3182CE] font-medium">{part}</span>
-        ) : (
-          <span key={i}>{part}</span>
-        )
-      ))}
-    </span>
-  );
+    return (
+      <span>
+        {parts.map((part, i) => (
+          regex.test(part) ? (
+            <span key={i} className="text-[#3182CE] font-medium">{part}</span>
+          ) : (
+            <span key={i}>{part}</span>
+          )
+        ))}
+      </span>
+    );
+  } catch (error) {
+    // Fallback in case of regex issues
+    console.error("Error in highlighting text:", error);
+    return <span>{text}</span>;
+  }
 };
 
 interface LocationSuggestionsProps {
@@ -47,6 +53,8 @@ export const LocationSuggestions: React.FC<LocationSuggestionsProps> = ({
 }) => {
   const totalSuggestions = [...suggestions.cities, ...suggestions.zipCodes];
   const hasResults = totalSuggestions.length > 0;
+
+  console.log("Rendering suggestions:", { isLoading, hasResults, suggestionsCount: totalSuggestions.length });
 
   if (isLoading) {
     return (
@@ -73,6 +81,7 @@ export const LocationSuggestions: React.FC<LocationSuggestionsProps> = ({
       )}
       role="listbox"
       id="location-suggestions"
+      data-state={hasResults ? "open" : "closed"}
     >
       {hasResults ? (
         <div className="py-1">

@@ -55,24 +55,36 @@ const ZIP_CODES: LocationSuggestion[] = [
  */
 export const filterLocations = (searchTerm: string): GroupedSuggestions => {
   if (!searchTerm || searchTerm.length < 2) {
+    console.log("Search term too short:", searchTerm);
     return { cities: [], zipCodes: [] };
   }
 
   const term = searchTerm.toLowerCase().trim();
   console.log(`Filtering locations for: "${term}"`);
   
-  // Filter cities
+  // Filter cities - now with more permissive matching
   const filteredCities = US_CITIES.filter(loc => 
     (loc.city?.toLowerCase().includes(term) || 
     loc.state?.toLowerCase().includes(term))
   ).slice(0, 5); // Limit to 5 results
   
-  // Filter zip codes - only if the term looks like a numeric value
-  const filteredZips = /^\d+$/.test(term) 
-    ? ZIP_CODES.filter(loc => loc.zip?.includes(term)).slice(0, 3)
+  // Filter zip codes - now with more permissive matching for numeric values
+  const filteredZips = /\d/.test(term) 
+    ? ZIP_CODES.filter(loc => 
+        loc.zip?.includes(term) || 
+        (term.length >= 3 && loc.city?.toLowerCase().includes(term))
+      ).slice(0, 3)
     : [];
   
   console.log(`Found ${filteredCities.length} cities and ${filteredZips.length} zip codes`);
+  
+  // Log each found item for debugging
+  if (filteredCities.length > 0) {
+    console.log("Matching cities:", filteredCities.map(c => `${c.city}, ${c.state}`));
+  }
+  if (filteredZips.length > 0) {
+    console.log("Matching zip codes:", filteredZips.map(z => `${z.zip} - ${z.city}, ${z.state}`));
+  }
   
   return {
     cities: filteredCities,

@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React, { useState } from 'react';
 import { SearchBar } from './search/SearchBar';
 import { CreatorsList } from './search/CreatorsList';
 import { BorderBeam } from './ui/border-beam';
@@ -12,6 +12,14 @@ import { GradientBlobBackground } from '@/components/ui/gradient-blob-background
 
 const PreviewSearch = () => {
   const isMobile = useIsMobile();
+  const [selectedLocation, setSelectedLocation] = useState<string>("");
+
+  // Handler for location selection
+  const handleLocationSelect = (location: string) => {
+    setSelectedLocation(location);
+    console.log(`Selected location: ${location}`);
+    // Here you would typically filter creators or fetch data based on location
+  };
 
   return (
     <div className="w-full px-2 sm:px-3 md:px-6 lg:px-8">
@@ -63,10 +71,19 @@ const PreviewSearch = () => {
           >
             <div className="flex flex-col w-full relative z-10">
               <div className="w-full px-2 sm:px-3 md:px-6 py-2 sm:py-3 md:py-5">
-                <SearchBar onLocationSelect={() => {}} />
+                {/* Pass the selectedLocation and the handleLocationSelect function */}
+                <SearchBar value={selectedLocation} onLocationSelect={handleLocationSelect} />
               </div>
             
               <div className="w-full px-2 sm:px-3 md:px-6 py-3 sm:py-4 md:py-6 bg-gradient-to-b from-transparent to-purple-50/20 sm:to-purple-50/30">
+                {/* Show selected location if any */}
+                {selectedLocation && (
+                  <div className="mb-4 px-2 py-2 bg-purple-50 rounded-md">
+                    <p className="text-sm text-purple-700">
+                      Showing results for: <span className="font-medium">{selectedLocation}</span>
+                    </p>
+                  </div>
+                )}
                 <CreatorsList 
                   creators={[{
                     name: "Emily Johnson",

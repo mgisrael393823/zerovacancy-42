@@ -40,7 +40,7 @@ const Header = () => {
               muted
               loop
               playsInline
-              className="h-9 w-auto"
+              className="h-14 w-auto"
             />
             <span className="ml-2 text-xl font-semibold text-blue-700">zerovacancy</span>
           </Link>

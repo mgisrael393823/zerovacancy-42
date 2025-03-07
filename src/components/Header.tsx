@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Menu, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -14,17 +14,34 @@ import { useAuthState } from '@/hooks/use-auth-state';
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [showSignInModal, setShowSignInModal] = useState(false);
+  const videoRef = useRef<HTMLVideoElement>(null);
   const {
     user,
     handleSignOut
   } = useAuthState();
+
+  useEffect(() => {
+    // Play the video when component mounts
+    if (videoRef.current) {
+      videoRef.current.play().catch(error => {
+        console.log('Autoplay prevented:', error);
+      });
+    }
+  }, []);
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-gray-200 bg-white/95 backdrop-blur-sm">
       <div className="mx-auto flex h-20 max-w-7xl items-center justify-between px-5 sm:px-6 lg:px-8">
         <div className="flex items-center">
           <Link to="/" className="flex items-center">
-            <img src="/logo.png" alt="Logo" className="h-9 w-auto" />
+            <video
+              ref={videoRef}
+              src="/logo.mp4"
+              muted
+              loop
+              playsInline
+              className="h-9 w-auto"
+            />
             <span className="ml-2 text-xl font-semibold text-blue-700">zerovacancy</span>
           </Link>
         </div>

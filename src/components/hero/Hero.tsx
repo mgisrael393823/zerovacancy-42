@@ -3,7 +3,7 @@
 
 import React from "react";
 import { motion, LayoutGroup } from "framer-motion";
-import { WaitlistCTA } from "../ui/waitlist/waitlist-cta";
+import { WaitlistCTA } from "@/components/ui/waitlist-cta"; // Fixed import path
 import { TextRotate } from "../ui/text-rotate";
 import Floating, { FloatingElement } from "@/components/ui/parallax-floating";
 
